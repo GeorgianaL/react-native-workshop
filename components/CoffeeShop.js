@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { Card, Button, Icon } from "react-native-elements";
 
 const CoffeeShop = ({ item }) => (
-  <Card>
+  <Card testID="testCardId">
     <Card.Title>HELLO WORLD</Card.Title>
     <Card.Divider />
     <Card.Image source={{ uri: item.image_url }} />

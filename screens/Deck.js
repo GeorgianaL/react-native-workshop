@@ -1,42 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, View, PanResponder } from "react-native";
-import Constants from "expo-constants";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Cards from "../components/Cards";
-
-const SEARCH_URL = "/businesses/search";
-const api = axios.create({
-  baseURL: "https://api.yelp.com/v3",
-  headers: {
-    Authorization: `Bearer ${Constants.manifest.extra.yelpApiKey}`,
-  },
-});
-
-const currentLocation = {
-  latitude: "51.5265",
-  longitude: "-0.0825",
-};
+import { fetchData } from "../actions";
 
 const Deck = () => {
-  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const coffeeShops = useSelector((reduxState) => reduxState.coffeeShops);
+  const loading = useSelector((reduxState) => reduxState.loading);
 
   useEffect(() => {
-    async function fetchData() {
-      const result = await api.get(SEARCH_URL, {
-        params: {
-          categories: "coffee,coffeeroasteries,coffeeshops",
-          ...currentLocation,
-        },
-      });
-
-      setData(result.data.businesses);
-    }
-
-    fetchData();
+    dispatch(fetchData());
   }, []);
 
-  return <Cards data={data} onSwipeRight={() => {}} onSwipeLeft={() => {}} />;
+  return (
+    <Cards data={coffeeShops} onSwipeRight={() => {}} onSwipeLeft={() => {}} />
+  );
 };
 
 export default Deck;

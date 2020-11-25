@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { PanResponder, StyleSheet, Animated, Dimensions } from "react-native";
 
-import CoffeeShop from "../CoffeeShop";
+import CoffeeShop from "./CoffeeShop";
 
 const SWIPE_THRESHOLD = 125;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -82,6 +82,7 @@ const Cards = ({ data, onSwipeRight, onSwipeLeft }) => {
         if (index === currentIndex) {
           return (
             <Animated.View
+              key={item.id}
               style={getCardStyle(position)}
               {...panResponder.panHandlers}
             >
